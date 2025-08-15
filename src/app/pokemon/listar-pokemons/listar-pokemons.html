@@ -1,0 +1,35 @@
+<div class="pokemon-container">
+  <h1 class="title" style="background-color: white;">
+    List of Pokémons
+  </h1>
+
+  @if (carregando) {
+  <div style="display: flex; justify-content: center; margin: 20px 0;">
+    <p-progressSpinner styleClass="custom-spinner"></p-progressSpinner>
+  </div>
+  } @else {
+  <div class="cards-grid">
+    @for (pokemon of pokemons; track pokemon.name) {
+    <div class="card-wrapper">
+      <p-card [style]="{ width: '100%', height: '100%' }">
+        <ng-template #header>
+          <img alt="Card" class="card-image" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+        </ng-template>
+
+        <ng-template #title> {{ pokemon.name || "Unknown Pokémon" }} </ng-template>
+        <ng-template #subtitle> Pokémon Info </ng-template>
+        <p class="card-description">
+          Explore the amazing world of {{ pokemon.name }}! Click to learn more about this incredible Pokémon.
+        </p>
+      </p-card>
+    </div>
+    }
+  </div>
+
+  }
+
+  <div class="pagination-buttons">
+    <button class="btn btn-secondary" (click)="voltarPagina()" [disabled]="carregando">Mostrar menos</button>
+    <button class="btn btn-primary" (click)="proximaPagina()" [disabled]="carregando">Mostrar mais</button>
+  </div>
+</div>

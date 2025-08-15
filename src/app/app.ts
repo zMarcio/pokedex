@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ListarPokemons } from './pokemon/listar-pokemons/listar-pokemons';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [ListarPokemons],
   templateUrl: './app.html',
-  styleUrl: './app.sass'
+  styleUrl: './app.sass',
 })
 export class App {
   protected readonly title = signal('pokedex');
