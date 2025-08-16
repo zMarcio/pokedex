@@ -6,6 +6,13 @@
   max-width: 1200px
   margin: 0 auto
 
+.header
+  display: flex
+  flex-direction: column
+  align-items: center
+  width: 100%
+  margin-bottom: 2rem
+
 .title
   text-align: center
   font-size: 2.5rem
@@ -14,6 +21,118 @@
   margin-bottom: 2rem
   text-transform: uppercase
   letter-spacing: 2px
+
+.autocomplete-wrapper
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 100%
+
+// Centralização simples do AutoComplete
+::ng-deep .p-autocomplete
+  width: 100%
+  max-width: 400px
+  display: flex
+  justify-content: center
+
+  .p-autocomplete-input
+    text-align: center
+
+  .p-autocomplete-dropdown
+    border-left: 1px solid #dee2e6
+
+  .p-autocomplete-clear-icon
+    right: 2.5rem
+
+  .p-autocomplete-loader
+    right: 1rem
+
+  .p-autocomplete-panel
+    width: 100% !important
+    min-width: 100%
+    max-width: 400px
+    box-sizing: border-box
+    border-radius: 8px
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
+    border: 1px solid #dee2e6
+    background: white
+    z-index: 1000
+
+  .p-autocomplete-items
+    width: 100%
+    max-height: 200px
+    overflow-y: auto
+
+  .p-autocomplete-item
+    width: 100%
+    box-sizing: border-box
+    padding: 12px 16px
+    border-bottom: 1px solid #f0f0f0
+    cursor: pointer
+    transition: background-color 0.2s ease
+    font-size: 14px
+
+    &:hover
+      background-color: #f8f9fa
+
+    &:last-child
+      border-bottom: none
+
+    &.p-highlight
+      background-color: #3498db
+      color: white
+
+  // Responsividade
+  @media (max-width: 768px)
+    max-width: 350px
+
+    .p-autocomplete-panel
+      max-width: 350px
+
+  @media (max-width: 480px)
+    max-width: 280px
+
+    .p-autocomplete-panel
+      max-width: 280px
+
+.search-result
+  width: 100%
+  margin-bottom: 2rem
+
+.search-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 2rem
+  padding: 0 1rem
+
+  @media (max-width: 768px)
+    flex-direction: column
+    gap: 1rem
+    text-align: center
+
+.search-title
+  font-size: 1.8rem
+  font-weight: bold
+  color: white
+  margin: 0
+
+.single-pokemon-card
+  display: flex
+  justify-content: center
+  width: 100%
+
+.featured-card
+  max-width: 400px
+  height: 500px
+
+  @media (max-width: 768px)
+    max-width: 350px
+    height: 480px
+
+  @media (max-width: 480px)
+    max-width: 300px
+    height: 450px
 
 .cards-grid
   display: grid
@@ -34,12 +153,36 @@
 
 .card-wrapper
   display: flex
-  height: 350px
+  height: 400px
+
+  // Responsividade da altura do card
+  @media (max-width: 768px)
+    height: 380px
+
+  @media (max-width: 480px)
+    height: 360px
 
 .card-image
   width: 100%
-  height: 150px
-  object-fit: cover
+  height: 200px
+  object-fit: contain
+  object-position: center
+  padding: 1rem
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)
+  border-radius: 8px 8px 0 0
+  transition: transform 0.3s ease
+
+  &:hover
+    transform: scale(1.05)
+
+  // Responsividade da imagem
+  @media (max-width: 768px)
+    height: 180px
+    padding: 0.8rem
+
+  @media (max-width: 480px)
+    height: 160px
+    padding: 0.5rem
 
 .card-description
   font-size: 0.9rem
@@ -52,6 +195,40 @@
   gap: 1rem
   justify-content: center
   margin-top: 2rem
+
+// Estilos para o PrimeNG Paginator
+::ng-deep .p-paginator
+  background: #ffffff
+  border: 1px solid #dee2e6
+  border-radius: 8px
+  padding: 1rem
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+
+  .p-paginator-current
+    background: transparent
+    color: #495057
+    font-weight: 600
+    padding: 0.5rem 1rem
+
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last
+    background: #3498db
+    color: white
+    border: none
+    border-radius: 4px
+    margin: 0 0.25rem
+    transition: all 0.3s ease
+
+    &:hover:not(.p-disabled)
+      background: #2980b9
+      transform: translateY(-1px)
+
+    &.p-disabled
+      background: #bdc3c7
+      color: #7f8c8d
+      cursor: not-allowed
 
 .btn
   padding: 0.75rem 1.5rem
@@ -76,3 +253,44 @@
     &:hover
       background-color: #7f8c8d
       transform: translateY(-2px)
+
+// Estilos específicos para o PrimeNG Card
+::ng-deep .p-card
+  height: 100%
+  display: flex
+  flex-direction: column
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+  transition: all 0.3s ease
+  border-radius: 12px
+  overflow: hidden
+
+  &:hover
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2)
+    transform: translateY(-5px)
+
+  .p-card-header
+    padding: 0
+    flex-shrink: 0
+
+  .p-card-body
+    flex: 1
+    display: flex
+    flex-direction: column
+    padding: 1rem
+
+  .p-card-title
+    font-size: 1.2rem
+    font-weight: bold
+    color: #2c3e50
+    margin-bottom: 0.5rem
+
+  .p-card-subtitle
+    color: #7f8c8d
+    font-size: 0.9rem
+    margin-bottom: 1rem
+
+  .p-card-content
+    flex: 1
+    display: flex
+    flex-direction: column
+    justify-content: space-between

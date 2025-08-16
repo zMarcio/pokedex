@@ -1,26 +1,77 @@
 <div class="pokemon-container">
-  <h1 class="title" style="background-color: white;">
-    List of Pokémons
-  </h1>
+  <div class="header">
+    <h1 class="title" style="color: white;">
+      List of Pokémons
+    </h1>
+
+    <div class="autocomplete-wrapper">
+      <p-autocomplete [(ngModel)]="selectedPokemon" [suggestions]="filteredPokemons"
+        (completeMethod)="filterPokemon($event)" (onSelect)="onPokemonSelect($event)" (onClear)="clearFilter()"
+        placeholder="Search Pokémon..." optionLabel="name" [dropdown]="true" [showClear]="true" [minLength]="1"
+        [delay]="300">
+      </p-autocomplete>
+    </div>
+  </div>
 
   @if (carregando) {
   <div style="display: flex; justify-content: center; margin: 20px 0;">
     <p-progressSpinner styleClass="custom-spinner"></p-progressSpinner>
   </div>
   } @else {
+
+  <!-- Resultado da busca específica -->
+  @if (isFiltered && searchedPokemon) {
+  <div class="search-result">
+    <div class="search-header">
+      <h2 class="search-title">Search Result</h2>
+      <p-button label="Back to List" icon="pi pi-arrow-left" (onClick)="voltarParaLista()" severity="secondary"
+        size="small"></p-button>
+    </div>
+
+    <div class="single-pokemon-card">
+      <div class="card-wrapper featured-card">
+        <p-card [style]="{ width: '100%', height: '100%' }">
+          <ng-template #header>
+            <img alt="{{ searchedPokemon.name }}" class="card-image"
+              [src]="searchedPokemon.detail?.sprites?.front_default || 'https://via.placeholder.com/150x150?text=Pokemon'" />
+          </ng-template>
+
+          <ng-template #title>
+            {{ searchedPokemon.name | titlecase }}
+          </ng-template>
+          <ng-template #subtitle>
+            Pokémon #{{ searchedPokemon.detail?.id || '???' }}
+          </ng-template>
+          <p class="card-description">
+            <strong>Height:</strong> {{ searchedPokemon.detail?.height || '???' }}dm<br>
+            <strong>Weight:</strong> {{ searchedPokemon.detail?.weight || '???' }}hg<br>
+          </p>
+          <p class="card-description">You found {{ searchedPokemon.name | titlecase }}!</p>
+        </p-card>
+      </div>
+    </div>
+  </div>
+  } @else {
+
+  <!-- Lista normal de pokémons -->
   <div class="cards-grid">
     @for (pokemon of pokemons; track pokemon.name) {
     <div class="card-wrapper">
       <p-card [style]="{ width: '100%', height: '100%' }">
         <ng-template #header>
-          <img alt="Card" class="card-image" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+          <img alt="{{ pokemon.name }}" class="card-image"
+            [src]="pokemon.detail?.sprites?.front_default || 'https://via.placeholder.com/150x150?text=Pokemon'" />
         </ng-template>
 
-        <ng-template #title> {{ pokemon.name || "Unknown Pokémon" }} </ng-template>
-        <ng-template #subtitle> Pokémon Info </ng-template>
+        <ng-template #title>
+          {{ pokemon.name | titlecase }}
+        </ng-template>
         <p class="card-description">
-          Explore the amazing world of {{ pokemon.name }}! Click to learn more about this incredible Pokémon.
+          <strong>Height:</strong> {{ pokemon.detail?.height || '???' }}dm<br>
+          <strong>Weight:</strong> {{ pokemon.detail?.weight || '???' }}hg<br>
+
         </p>
+        <p class="card-description">Explore the amazing world of {{ pokemon.name | titlecase }}!</p>
       </p-card>
     </div>
     }
@@ -28,8 +79,14 @@
 
   }
 
+  }
+
+  <!-- Paginação apenas quando não estiver filtrando -->
+  @if (!isFiltered) {
   <div class="pagination-buttons">
-    <button class="btn btn-secondary" (click)="voltarPagina()" [disabled]="carregando">Mostrar menos</button>
-    <button class="btn btn-primary" (click)="proximaPagina()" [disabled]="carregando">Mostrar mais</button>
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
+      [showCurrentPageReport]="true" [showPageLinks]="false" [showJumpToPageDropdown]="false"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" />
   </div>
+  }
 </div>
